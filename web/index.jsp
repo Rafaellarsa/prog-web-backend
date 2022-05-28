@@ -8,7 +8,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SMD E-commerce</title>
+        <title>SMD E-commerce - Ivna Branch</title>
     </head>
     <body>
         <h1>SMD E-commerce</h1>
