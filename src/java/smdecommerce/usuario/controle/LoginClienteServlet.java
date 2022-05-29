@@ -1,7 +1,7 @@
 package smdecommerce.usuario.controle;
 
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,13 +43,24 @@ public class LoginClienteServlet extends HttpServlet {
             mensagem = ex.getMessage();
         }
         /* saída */
-        if (sucesso) {
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("principalCliente.jsp");
-            requestDispatcher.forward(request, response);
-        } else {
-            request.setAttribute("mensagem", mensagem);
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
-            requestDispatcher.forward(request, response);
+       /* Linhas utilizadas para permitir CORS - Início */
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Headers", "Authorization");
+        response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");;
+        response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
+        response.addHeader("Access-Control-Max-Age", "1728000");
+        /* Linhas utilizadas para permitir CORS - Fim */
+        /* Linhas utilizadas para montar e enviar o JSON de retorno do Servlet - Início */
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            out.println("{");
+            if (sucesso) {
+                out.println("\"sucesso\": true");
+            } else {
+                out.println("\"sucesso\": false");
+            }
+            out.println("}");
         }
     }
 
