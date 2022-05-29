@@ -1,6 +1,7 @@
 package smdecommerce.usuario.controle;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -41,9 +42,24 @@ public class NovoClienteServlet extends HttpServlet {
             mensagem = ex.getMessage();
         }
         /* saída */
-        request.setAttribute("mensagem", mensagem);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
-        requestDispatcher.forward(request, response);
+        /* Linhas utilizadas para permitir CORS - Início */
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");;
+        response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
+        response.addHeader("Access-Control-Max-Age", "1728000");
+        /* Linhas utilizadas para permitir CORS - Fim */
+        
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            out.println("{");
+            if (inseriu) {
+                out.println("\"sucesso\": true");
+            } else {
+                out.println("\"sucesso\": false");
+            }
+            out.println("}");
+        }
     }
 
 }
