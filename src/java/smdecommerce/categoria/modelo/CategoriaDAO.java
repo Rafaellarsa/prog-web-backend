@@ -35,27 +35,6 @@ public class CategoriaDAO {
         return categoria;
     }
 
-    public Categoria obter(String login) throws Exception {
-        Categoria categoria = null;
-        Class.forName("org.postgresql.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/smdecommerce", "postgres", "ufc123");
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, nome FROM categoria WHERE login = ?");
-        preparedStatement.setString(1, login);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            categoria = new Categoria();
-            categoria.setId(resultSet.getInt("id"));
-            categoria.setNome(resultSet.getString("nome"));
-        }
-        resultSet.close();
-        preparedStatement.close();
-        connection.close();
-        if (categoria == null) {
-            throw new Exception("Usuário não encontrado");
-        }
-        return categoria;
-    }
-
     /**
      * Método utilizado para inserir um novo usuário
      *
