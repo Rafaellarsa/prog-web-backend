@@ -24,6 +24,7 @@ public class LoginClienteServlet extends HttpServlet {
         /* entrada */
         String login = request.getParameter("login");
         String senha = request.getParameter("senha");
+        Boolean isAdmin = false;
         /* processamento */
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         boolean sucesso = false;
@@ -33,6 +34,7 @@ public class LoginClienteServlet extends HttpServlet {
             if (usuario.getSenha().equals(senha)) {
                 sucesso = true;
                 HttpSession session = request.getSession(true);
+                isAdmin = usuario.getAdministrador();
                 session.setAttribute("usuario", usuario);
             } else {
                 sucesso = false;
@@ -50,15 +52,18 @@ public class LoginClienteServlet extends HttpServlet {
         response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
         response.addHeader("Access-Control-Max-Age", "1728000");
         /* Linhas utilizadas para permitir CORS - Fim */
-        /* Linhas utilizadas para montar e enviar o JSON de retorno do Servlet - Início */
+
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             out.println("{");
             if (sucesso) {
-                out.println("\"sucesso\": true");
+                out.println("\"sucesso\": true,");
+                out.println("\"login\": \"" + login + "\",");
+                out.println("\"isAdmin\": " + isAdmin);
             } else {
-                out.println("\"sucesso\": false");
+                out.println("\"sucesso\": false,");
+                out.println("\"error\": \"" + mensagem + "\"");
             }
             out.println("}");
         }

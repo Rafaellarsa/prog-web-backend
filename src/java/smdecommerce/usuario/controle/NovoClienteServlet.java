@@ -39,6 +39,7 @@ public class NovoClienteServlet extends HttpServlet {
             mensagem = "Cliente inserido com sucesso";
         } catch (Exception ex) {
             inseriu = false;
+            
             mensagem = ex.getMessage();
         }
         /* saída */
