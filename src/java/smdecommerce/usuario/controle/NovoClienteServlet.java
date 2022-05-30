@@ -57,7 +57,9 @@ public class NovoClienteServlet extends HttpServlet {
                 out.println("\"sucesso\": true");
             } else {
                 out.println("\"sucesso\": false");
+                out.println("\"error\": " + mensagem);
             }
+            out.println("\"nome\": " + nome);
             out.println("}");
         }
     }
