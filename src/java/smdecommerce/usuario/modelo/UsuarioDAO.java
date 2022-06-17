@@ -94,6 +94,7 @@ public class UsuarioDAO {
     public void inserir(String nome, String endereco, String email, String login, String senha, boolean administrador) throws Exception {
         Class.forName("org.postgresql.Driver");
         Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/smdecommerce", "postgres", "ufc123");
+        
         PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO usuario (id_usuario, nome_usuario, endereco_usuario, email_usuario, login_usuario, senha_usuario, adm) VALUES (?, ?, ?, ?, ?, ?, ?)");
         preparedStatement.setInt(1, new Random().nextInt(100000));
         preparedStatement.setString(2, nome);
@@ -102,11 +103,14 @@ public class UsuarioDAO {
         preparedStatement.setString(5, login);
         preparedStatement.setString(6, senha);
         preparedStatement.setBoolean(7, administrador);
+        
         int resultado = preparedStatement.executeUpdate();
         preparedStatement.close();
         connection.close();
+        
         if (resultado != 1) {
             throw new Exception("Não foi possível inserir o usuário");
         }
+    
     }
 }

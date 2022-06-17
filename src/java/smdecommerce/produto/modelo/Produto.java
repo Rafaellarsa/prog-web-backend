@@ -13,6 +13,7 @@ import java.io.Serializable;
 public class Produto implements Serializable{
     
     private Integer id;
+    private String nome;
     private String descricao;
     private Double preco;
     private String foto;
@@ -103,5 +104,32 @@ public class Produto implements Serializable{
         this.id_categoria = id_categoria;
     }
 
+    /**
+     * @return the nome
+     */
+    public String getNome() {
+        return nome;
+    }
+
+    /**
+     * @param nome the nome to set
+     */
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String toJSON() {
+        String json = "";
+        json += "{";
+            json += "\"id\":" + id + ", ";
+            json += "\"nome\":\"" + nome + "\", ";
+            json += "\"descricao\":\"" + descricao + "\", ";
+            json += "\"preco\":" + preco + ", ";
+            json += "\"foto\":" + foto + ", ";
+            json += "\"id_categoria\":" + id_categoria + ", ";
+            json += "\"quantidade\":" + qntde;
+        json += "}";
+        return json;
+    }
     
 }
