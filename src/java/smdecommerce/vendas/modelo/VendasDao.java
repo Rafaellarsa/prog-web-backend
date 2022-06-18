@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import smdecommerce.application.DatabaseConnection;
 
 /**
  *
@@ -17,14 +18,20 @@ import java.util.List;
  */
 public class VendasDao {
     
+    
+    DatabaseConnection dbconnection = null;
+    PreparedStatement preparedStatement = null;
+
+    public VendasDao() {
+        dbconnection = new DatabaseConnection();
+    }
+    
     //cadastra uma nova venda
     public boolean cadastrarVenda (int id_venda, String data_hora_venda, int id_cliente_venda, int id_produto_venda) throws Exception{
         boolean status;
         
-        Class.forName("org.postgresql.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/smdecommerce", "postgres", "ufc123");
-        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO venda (id_venda, data_hora_venda, id_cliente_venda, id_produto_venda) VALUES (?, ?, ?, ?)");
-        
+        String SQLQuery = "INSERT INTO venda (id_venda, data_hora_venda, id_cliente_venda, id_produto_venda) VALUES (?, ?, ?, ?)";
+        preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
         preparedStatement.setInt(1, id_venda);
         preparedStatement.setString(2, data_hora_venda);
         preparedStatement.setInt(3, id_cliente_venda);
@@ -34,7 +41,7 @@ public class VendasDao {
         int resultado = preparedStatement.executeUpdate();
         
         preparedStatement.close();
-        connection.close();
+        dbconnection.closeConnection();
         
         if (resultado != 1) {
             status = false;
@@ -50,8 +57,9 @@ public class VendasDao {
         List<Vendas> listavenda = new ArrayList<>();
         Class.forName("org.postgresql.Driver");
         
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/smdecommerce", "postgres", "ufc123");
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT id_venda, data_hora_venda, id_cliente_venda, id_produto_venda FROM venda WHERE id_cliente_venda = ?");
+        
+        String SQLQuery = "SELECT id_venda, data_hora_venda, id_cliente_venda, id_produto_venda FROM venda WHERE id_cliente_venda = ?";
+        preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
         preparedStatement.setInt(1, id);
         
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -68,7 +76,7 @@ public class VendasDao {
         }
         resultSet.close();
         preparedStatement.close();
-        connection.close();
+        dbconnection.closeConnection();
         if (listavenda.isEmpty()) {
             throw new Exception("nenhuma venda foi efetuada pora este usuário");
         }

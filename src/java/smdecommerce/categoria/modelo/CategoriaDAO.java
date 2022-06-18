@@ -5,8 +5,17 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Random;
+import smdecommerce.application.DatabaseConnection;
 
 public class CategoriaDAO {
+    
+    
+    DatabaseConnection dbconnection = null;
+    PreparedStatement preparedStatement = null;
+
+    public CategoriaDAO() {
+        dbconnection = new DatabaseConnection();
+    }
 
     /**
      * Método utilizado para obter um usuário pelo seu identificador
@@ -17,9 +26,10 @@ public class CategoriaDAO {
      */
     public Categoria obter(int id) throws Exception {
         Categoria categoria = null;
-        Class.forName("org.postgresql.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/smdecommerce", "postgres", "ufc123");
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, descricao_categoria FROM categoria WHERE id = ?");
+        
+        String SQLQuery = "SELECT id, descricao_categoria FROM categoria WHERE id = ?";
+        preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
+        
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
@@ -29,7 +39,7 @@ public class CategoriaDAO {
         }
         resultSet.close();
         preparedStatement.close();
-        connection.close();
+        dbconnection.closeConnection();
         if (categoria == null) {
             throw new Exception("Categoria não encontrada");
         }
@@ -49,13 +59,13 @@ public class CategoriaDAO {
      */
     public void inserir(String descricaoCategoria) throws Exception {
         Class.forName("org.postgresql.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/smdecommerce", "postgres", "ufc123");
-        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO categoria (id_categoria, descricao_categoria) VALUES (?, ?)");
+        String SQLQuery = "INSERT INTO categoria (id_categoria, descricao_categoria) VALUES (?, ?)";
+        preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
         preparedStatement.setInt(1, new Random().nextInt(100000));
         preparedStatement.setString(2, descricaoCategoria);
         int resultado = preparedStatement.executeUpdate();
         preparedStatement.close();
-        connection.close();
+        dbconnection.closeConnection();
         if (resultado != 1) {
             throw new Exception("Não foi possível inserir o categoria");
         }

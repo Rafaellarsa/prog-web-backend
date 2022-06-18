@@ -1,10 +1,9 @@
 package smdecommerce.usuario.modelo;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Random;
+import smdecommerce.application.DatabaseConnection;
 
 /**
  *
@@ -13,6 +12,15 @@ import java.util.Random;
  * Classe que implementa o padrão DAO para a entidade usuário
  */
 public class UsuarioDAO {
+    
+    DatabaseConnection dbconnection = null;
+    PreparedStatement preparedStatement = null;
+
+    public UsuarioDAO() {
+        dbconnection = new DatabaseConnection();
+    }
+    
+    
 
     /**
      * Método utilizado para obter um usuário pelo seu identificador
@@ -23,9 +31,8 @@ public class UsuarioDAO {
      */
     public Usuario obter(int id) throws Exception {
         Usuario usuario = null;
-        Class.forName("org.postgresql.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/smdecommerce", "postgres", "ufc123");
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT id_usuario, nome_usuario, endereco_usuario, email_usuario, login_usuario, senha_usuario, adm = ?");
+        String SQLQuery = "SELECT id_usuario, nome_usuario, endereco_usuario, email_usuario, login_usuario, senha_usuario, adm = ?";
+        preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
         preparedStatement.setInt(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
@@ -40,7 +47,7 @@ public class UsuarioDAO {
         }
         resultSet.close();
         preparedStatement.close();
-        connection.close();
+        dbconnection.closeConnection();
         if (usuario == null) {
             throw new Exception("Usuário não encontrado");
         }
@@ -56,9 +63,8 @@ public class UsuarioDAO {
      */
     public Usuario obter(String login) throws Exception {
         Usuario usuario = null;
-        Class.forName("org.postgresql.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/smdecommerce", "postgres", "ufc123");
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT id_usuario, nome_usuario, endereco_usuario, email_usuario, login_usuario, senha_usuario, adm  FROM usuario WHERE login_usuario = ?");
+        String SQLQuery = "SELECT id_usuario, nome_usuario, endereco_usuario, email_usuario, login_usuario, senha_usuario, adm  FROM usuario WHERE login_usuario = ?";
+        preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
         preparedStatement.setString(1, login);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
@@ -73,7 +79,7 @@ public class UsuarioDAO {
         }
         resultSet.close();
         preparedStatement.close();
-        connection.close();
+        dbconnection.closeConnection();
         if (usuario == null) {
             throw new Exception("Usuário não encontrado");
         }
@@ -93,9 +99,8 @@ public class UsuarioDAO {
      */
     public void inserir(String nome, String endereco, String email, String login, String senha, boolean administrador) throws Exception {
         Class.forName("org.postgresql.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/smdecommerce", "postgres", "ufc123");
-        
-        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO usuario (id_usuario, nome_usuario, endereco_usuario, email_usuario, login_usuario, senha_usuario, adm) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        String SQLQuery = "INSERT INTO usuario (id_usuario, nome_usuario, endereco_usuario, email_usuario, login_usuario, senha_usuario, adm) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
         preparedStatement.setInt(1, new Random().nextInt(100000));
         preparedStatement.setString(2, nome);
         preparedStatement.setString(3, endereco);
@@ -106,7 +111,7 @@ public class UsuarioDAO {
         
         int resultado = preparedStatement.executeUpdate();
         preparedStatement.close();
-        connection.close();
+        dbconnection.closeConnection();
         
         if (resultado != 1) {
             throw new Exception("Não foi possível inserir o usuário");

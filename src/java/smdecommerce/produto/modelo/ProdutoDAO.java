@@ -4,26 +4,32 @@
  */
 package smdecommerce.produto.modelo;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import smdecommerce.application.DatabaseConnection;
 
 /**
  *
  * @author SilvaVan
  */
 public class ProdutoDAO {
+    
+    
+    DatabaseConnection dbconnection = null;
+    PreparedStatement preparedStatement = null;
+
+    public ProdutoDAO() {
+        dbconnection = new DatabaseConnection();
+    }
    
     @SuppressWarnings("ConvertToTryWithResources")
     public void cadastrarProduto (String nome, String desc, double preco, String foto, int qtde, int id_categoria) throws Exception{
         
-        Class.forName("org.postgresql.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/smdecommerce", "postgres", "ufc123");
-        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO produto (id_produto, nome_produto, descricao_produto, preco_produto, foto_produto, quantidade_produto, id_categoria_produto) VALUES (?, ?, ?, ?, ?, ?)");
+        String SQLQuery = "INSERT INTO produto (id_produto, nome_produto, descricao_produto, preco_produto, foto_produto, quantidade_produto, id_categoria_produto) VALUES (?, ?, ?, ?, ?, ?)";
+        preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
         
         preparedStatement.setInt(1, new Random().nextInt(100000));
         preparedStatement.setString(2, nome);
@@ -36,7 +42,7 @@ public class ProdutoDAO {
         int resultado = preparedStatement.executeUpdate();
         
         preparedStatement.close();
-        connection.close();
+        dbconnection.closeConnection();
         
         if (resultado != 1) {
             throw new Exception("Erro ao cadastrar o produto");
@@ -51,10 +57,8 @@ public class ProdutoDAO {
     @SuppressWarnings("ConvertToTryWithResources")
     public Produto consultarProduto(int id) throws Exception {
         Produto produto = null;
-        Class.forName("org.postgresql.Driver");
-        
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/smdecommerce", "postgres", "ufc123");
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT id_produto, nome_produto, descricao_produto, preco_produto, foto_produto, quantidade_produto, id_categoria_produto FROM produto WHERE id_produto = ?");
+        String SQLQuery = "SELECT id_produto, nome_produto, descricao_produto, preco_produto, foto_produto, quantidade_produto, id_categoria_produto FROM produto WHERE id_produto = ?";
+        preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
         preparedStatement.setInt(1, id);
         
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -75,7 +79,7 @@ public class ProdutoDAO {
         }
         resultSet.close();
         preparedStatement.close();
-        connection.close();
+        dbconnection.closeConnection();
         if (produto == null) {
             throw new Exception("Produto não encontrado");
         }
@@ -84,10 +88,8 @@ public class ProdutoDAO {
 
     public List<Produto> consultarProdutoPorNome(String nome) throws Exception {
         List<Produto> produtos = new ArrayList<>();
-        Class.forName("org.postgresql.Driver");
-        
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/smdecommerce", "postgres", "ufc123");
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT id_produto, nome_produto, descricao_produto, preco_produto, foto_produto, quantidade_produto, id_categoria_produto FROM produto LIKE %?%");
+        String SQLQuery = "SELECT id_produto, nome_produto, descricao_produto, preco_produto, foto_produto, quantidade_produto, id_categoria_produto FROM produto LIKE %?%";
+        preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
         preparedStatement.setString(1, nome);
         
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -110,17 +112,16 @@ public class ProdutoDAO {
         }
         resultSet.close();
         preparedStatement.close();
-        connection.close();
+        dbconnection.closeConnection();
         return produtos;
     }
 
     @SuppressWarnings("ConvertToTryWithResources")
     public List<Produto> listarProdutosEstoque() throws Exception {
         List<Produto> produtos = new ArrayList<>();
-        Class.forName("org.postgresql.Driver");
         
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/smdecommerce", "postgres", "ufc123");
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT id_produto, nome_produto, descricao_produto, preco_produto, foto_produto, quantidade_produto, id_categoria_produto FROM produto WHERE quantidade_produto > 0");
+        String SQLQuery = "SELECT id_produto, nome_produto, descricao_produto, preco_produto, foto_produto, quantidade_produto, id_categoria_produto FROM produto WHERE quantidade_produto > 0";
+        preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
         ResultSet resultSet = preparedStatement.executeQuery();
         
         while (resultSet.next()) {
@@ -141,7 +142,7 @@ public class ProdutoDAO {
         }
         resultSet.close();
         preparedStatement.close();
-        connection.close();
+        dbconnection.closeConnection();
         return produtos;
     }
 
@@ -153,10 +154,8 @@ public class ProdutoDAO {
     @SuppressWarnings("ConvertToTryWithResources")
     public List<Produto> listarProdutos() throws Exception {
         List<Produto> produtos = new ArrayList<>();
-        Class.forName("org.postgresql.Driver");
-        
-        Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/smdecommerce", "postgres", "ufc123");
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT id_produto, nome_produto, descricao_produto, preco_produto, foto_produto, quantidade_produto, id_categoria_produto FROM produto");
+        String SQLQuery = "SELECT id_produto, nome_produto, descricao_produto, preco_produto, foto_produto, quantidade_produto, id_categoria_produto FROM produto";
+        preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
         ResultSet resultSet = preparedStatement.executeQuery();
         
         while (resultSet.next()) {
@@ -177,7 +176,7 @@ public class ProdutoDAO {
         }
         resultSet.close();
         preparedStatement.close();
-        connection.close();
+        dbconnection.closeConnection();
         return produtos;
     }
 
