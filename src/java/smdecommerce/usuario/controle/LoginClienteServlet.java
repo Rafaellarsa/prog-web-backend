@@ -34,12 +34,13 @@ public class LoginClienteServlet extends HttpServlet {
             Usuario usuario = usuarioDAO.obter(login);
             if (usuario.getSenha().equals(senha)) {
                 sucesso = true;
-                HttpSession session = request.getSession(true);
                 isAdmin = usuario.getAdministrador();
-                session.setAttribute("usuario", usuario);
+                HttpSession session = request.getSession(true);
+                session.setAttribute("currentUser", usuario);
+                session.setAttribute("admin", isAdmin);
+                response.sendRedirect("principalCliente.jsp");
             } else {
-                sucesso = false;
-                mensagem = "Login ou senha inválida";
+                response.sendRedirect("invalidLogin.jsp");
             }
         } catch (Exception ex) {
             sucesso = false;
@@ -56,17 +57,17 @@ public class LoginClienteServlet extends HttpServlet {
 
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
-        if (sucesso && isAdmin) {
-                RequestDispatcher requestDispatcher = request
-                        .getRequestDispatcher("/novaCategoria.jsp");
-                requestDispatcher.forward(request, response);
-            } else {
-
-                RequestDispatcher requestDispatcher = request
-                        .getRequestDispatcher("/invalidLogin.jsp");
-                requestDispatcher.forward(request, response);
-
-            }
+//        if (sucesso && isAdmin) {
+//                RequestDispatcher requestDispatcher = request
+//                        .getRequestDispatcher("/novaCategoria.jsp");
+//                requestDispatcher.forward(request, response);
+//            } else {
+//
+//                RequestDispatcher requestDispatcher = request
+//                        .getRequestDispatcher("/invalidLogin.jsp");
+//                requestDispatcher.forward(request, response);
+//
+//            }
 //        try (PrintWriter out = response.getWriter()) {
 //            out.println("{");
 //            if (sucesso) {

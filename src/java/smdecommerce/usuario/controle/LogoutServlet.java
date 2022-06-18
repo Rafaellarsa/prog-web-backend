@@ -34,11 +34,12 @@ public class LogoutServlet extends HttpServlet {
         
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            out.println("{");
-            out.println("\"mensagem\":  \"Sua sessão foi encerrada\"");
-            out.println("}");
-        }
+        response.sendRedirect("index.jsp");
+//        try (PrintWriter out = response.getWriter()) {
+//            out.println("{");
+//            out.println("\"mensagem\":  \"Sua sessão foi encerrada\"");
+//            out.println("}");
+//        }
     }
 
 }

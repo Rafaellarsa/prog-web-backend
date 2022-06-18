@@ -3,7 +3,7 @@
     Author     : leoomoreira
 --%>
 <%
-    Usuario usuario = (Usuario) session.getAttribute("usuario");
+    Usuario usuario = (Usuario) session.getAttribute("currentUser");
     if (usuario == null) {
         request.setAttribute("mensagem", "Você não tem uma sessão válida de usuário do tipo cliente");
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
@@ -22,6 +22,11 @@
         <h1>SMD E-commerce</h1>
         <hr/>
         <h3>Bem-vindo, <%= usuario.getNome()%>!</h3>
+        <% if (session.getAttribute("admin").equals(true)) { %> 
+        <a href="novaCategoria.jsp">Nova Categoria</a> 
+        <% } else { %> 
+        <p> Faça login como admin para adicionar categoria </p> 
+        <% } %>
         <a href="Logout">Sair</a>
     </body>
 </html>

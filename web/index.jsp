@@ -24,6 +24,5 @@
             <input type="submit" value="Entrar" />
         </form>
         <a href="novoCliente.jsp">Novo Cliente</a>
-        <a href="novaCategoria.jsp">Nova Categoria</a>
     </body>
 </html>
