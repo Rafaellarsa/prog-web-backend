@@ -14,7 +14,8 @@
     <body>
          <h1>SMD E-commerce</h1>
          <hr/>
-         <h3>Cadastrar Novo Cliente</h3>
+         <h3>Adm logado.</h3>
+         <h3>Cadastrar categoria</h3>
          <form action="Categoria" method="post">
              <input type="text" name="descricaoCategoria" placeholder="Entre com o nome da categoria" /><br/>
              <input type="submit" value="Cadastrar" />

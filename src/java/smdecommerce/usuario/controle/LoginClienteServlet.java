@@ -2,6 +2,7 @@ package smdecommerce.usuario.controle;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -55,6 +56,17 @@ public class LoginClienteServlet extends HttpServlet {
 
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
+        if (sucesso && isAdmin) {
+                RequestDispatcher requestDispatcher = request
+                        .getRequestDispatcher("/novaCategoria.jsp");
+                requestDispatcher.forward(request, response);
+            } else {
+
+                RequestDispatcher requestDispatcher = request
+                        .getRequestDispatcher("/invalidLogin.jsp");
+                requestDispatcher.forward(request, response);
+
+            }
 //        try (PrintWriter out = response.getWriter()) {
 //            out.println("{");
 //            if (sucesso) {
