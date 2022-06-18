@@ -55,18 +55,18 @@ public class LoginClienteServlet extends HttpServlet {
 
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            out.println("{");
-            if (sucesso) {
-                out.println("\"sucesso\": true,");
-                out.println("\"login\": \"" + login + "\",");
-                out.println("\"isAdmin\": " + isAdmin);
-            } else {
-                out.println("\"sucesso\": false,");
-                out.println("\"error\": \"" + mensagem + "\"");
-            }
-            out.println("}");
-        }
+//        try (PrintWriter out = response.getWriter()) {
+//            out.println("{");
+//            if (sucesso) {
+//                out.println("\"sucesso\": true,");
+//                out.println("\"login\": \"" + login + "\",");
+//                out.println("\"isAdmin\": " + isAdmin);
+//            } else {
+//                out.println("\"sucesso\": false,");
+//                out.println("\"error\": \"" + mensagem + "\"");
+//            }
+//            out.println("}");
+//        }
     }
 
 }
