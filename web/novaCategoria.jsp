@@ -11,6 +11,7 @@
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
         requestDispatcher.forward(request, response);
     } else {
+         if(usuario.getAdministrador() == true){
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -31,5 +32,24 @@
      </body>
 </html>
 <%
-    }
+    } else {
+
+%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+    </head>
+    <body>
+         <h1>SMD E-commerce</h1>
+         <hr/>
+         <h3>Cadastrar nova categoria</h3>
+         <p>Para ter acesso a esta página, você deve estar logado como admin.</p>
+         <a href="index.jsp">Voltar</a>
+     </body>
+</html>
+<%
+
+} }
 %>
