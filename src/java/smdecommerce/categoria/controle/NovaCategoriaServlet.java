@@ -17,11 +17,11 @@ import smdecommerce.categoria.modelo.CategoriaDAO;
  *
  * @author ivalm
  */
-public class CategoriaServlet extends HttpServlet {
+public class NovaCategoriaServlet extends HttpServlet {
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        throws ServletException, IOException {
         /* entrada */
         String descricaoCategoria = request.getParameter("descricaoCategoria");
         Boolean isAdmin = false;
@@ -48,7 +48,6 @@ public class CategoriaServlet extends HttpServlet {
         /* saída */
        /* Linhas utilizadas para permitir CORS - Início */
         response.addHeader("Access-Control-Allow-Origin", "*");
-        response.addHeader("Access-Control-Allow-Headers", "Authorization");
         response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");;
         response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
         response.addHeader("Access-Control-Max-Age", "1728000");
