@@ -74,4 +74,16 @@ public class Usuario implements Serializable {
         this.administrador = administrador;
     }
     
+    public String toJSON() {
+        String json = "";
+        json += "{";
+            json += "\"id\":" + id + ", ";
+            json += "\"nome\":\"" + nome + "\", ";
+            json += "\"endereco\":\"" + endereco + "\", ";
+            json += "\"email\":\"" + email + "\", ";
+            json += "\"login\":\"" + login + "\", ";
+            json += "\"administrador\":" + administrador;
+        json += "}";
+        return json;
+    }
 }

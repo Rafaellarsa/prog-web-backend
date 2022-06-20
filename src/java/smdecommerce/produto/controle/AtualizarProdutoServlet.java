@@ -18,7 +18,7 @@ import smdecommerce.produto.modelo.ProdutoDAO;
 public class AtualizarProdutoServlet {
     
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    
+        request.setCharacterEncoding("UTF-8");
         String nome = request.getParameter("nome");
         String desc = request.getParameter("descricao");
         double preco = Double.parseDouble(request.getParameter("preco"));

@@ -29,6 +29,14 @@
         <servlet-class>smdecommerce.usuario.controle.NovoClienteServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>DeletarClienteServlet</servlet-name>
+        <servlet-class>smdecommerce.usuario.controle.DeletarClienteServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AtualizarClienteServlet</servlet-name>
+        <servlet-class>smdecommerce.usuario.controle.AtualizarClienteServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>NovoProdutoServlet</servlet-name>
         <servlet-class>smdecommerce.produto.controle.NovoProdutoServlet</servlet-class>
     </servlet>
@@ -51,6 +59,14 @@
     <servlet-mapping>
         <servlet-name>NovoClienteServlet</servlet-name>
         <url-pattern>/NovoCliente</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeletarClienteServlet</servlet-name>
+        <url-pattern>/DeletarCliente</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AtualizarClienteServlet</servlet-name>
+        <url-pattern>/AtualizarCliente</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LoginClienteServlet</servlet-name>

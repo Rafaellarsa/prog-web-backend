@@ -22,6 +22,7 @@ public class LoginClienteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         /* entrada */
         String login = request.getParameter("login");
         String senha = request.getParameter("senha");
@@ -30,8 +31,9 @@ public class LoginClienteServlet extends HttpServlet {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         boolean sucesso = false;
         String mensagem = null;
+        Usuario usuario = null;
         try {
-            Usuario usuario = usuarioDAO.obter(login);
+            usuario = usuarioDAO.obter(login);
             if (usuario.getSenha().equals(senha)) {
                 sucesso = true;
                 isAdmin = usuario.getAdministrador();
@@ -73,7 +75,7 @@ public class LoginClienteServlet extends HttpServlet {
             out.println("{");
             if (sucesso) {
                 out.println("\"sucesso\": true,");
-                out.println("\"login\": \"" + login + "\",");
+                out.println("\"usuario\": " + usuario.toJSON() + ",");
                 out.println("\"isAdmin\": " + isAdmin);
             } else {
                 out.println("\"sucesso\": false,");

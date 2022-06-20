@@ -20,6 +20,7 @@ public class AtualizarClienteServlet extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         /* entrada */
+        request.setCharacterEncoding("UTF-8");
         String nome = request.getParameter("nome");
         String endereco = request.getParameter("endereco");
         String email = request.getParameter("email");
