@@ -38,9 +38,10 @@ public class LoginClienteServlet extends HttpServlet {
                 HttpSession session = request.getSession(true);
                 session.setAttribute("currentUser", usuario);
                 session.setAttribute("admin", isAdmin);
-                response.sendRedirect("principalCliente.jsp");
+                //sem comentar isso, não loga. pois não manda resposta.
+//                response.sendRedirect("principalCliente.jsp");
             } else {
-                response.sendRedirect("invalidLogin.jsp");
+//                response.sendRedirect("invalidLogin.jsp");
             }
         } catch (Exception ex) {
             sucesso = false;
@@ -50,7 +51,7 @@ public class LoginClienteServlet extends HttpServlet {
        /* Linhas utilizadas para permitir CORS - Início */
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.addHeader("Access-Control-Allow-Headers", "Authorization");
-        response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");;
+        response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
         response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
         response.addHeader("Access-Control-Max-Age", "1728000");
         /* Linhas utilizadas para permitir CORS - Fim */
@@ -68,18 +69,18 @@ public class LoginClienteServlet extends HttpServlet {
 //                requestDispatcher.forward(request, response);
 //
 //            }
-//        try (PrintWriter out = response.getWriter()) {
-//            out.println("{");
-//            if (sucesso) {
-//                out.println("\"sucesso\": true,");
-//                out.println("\"login\": \"" + login + "\",");
-//                out.println("\"isAdmin\": " + isAdmin);
-//            } else {
-//                out.println("\"sucesso\": false,");
-//                out.println("\"error\": \"" + mensagem + "\"");
-//            }
-//            out.println("}");
-//        }
+        try (PrintWriter out = response.getWriter()) {
+            out.println("{");
+            if (sucesso) {
+                out.println("\"sucesso\": true,");
+                out.println("\"login\": \"" + login + "\",");
+                out.println("\"isAdmin\": " + isAdmin);
+            } else {
+                out.println("\"sucesso\": false,");
+                out.println("\"error\": \"" + mensagem + "\"");
+            }
+            out.println("}");
+        }
     }
 
 }

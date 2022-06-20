@@ -7,10 +7,6 @@ package smdecommerce.categoria.controle;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,26 +17,26 @@ import smdecommerce.categoria.modelo.CategoriaDAO;
  *
  * @author ivalm
  */
-public class CategoriaServlet extends HttpServlet {
+public class UpdateCategoriaServlet extends HttpServlet {
     
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         /* entrada */
-        String descricaoCategoria = request.getParameter("descricaoCategoria");
-        Boolean isAdmin = false;
+        String old = request.getParameter("old_descricao_categoria");
+        String descricaoCategoria = request.getParameter("descricao_categoria");
         /* processamento */
         CategoriaDAO categoriaDAO = new CategoriaDAO();
         boolean sucesso = false;
         String mensagem = null;
-         ResultSet rs = null;
         try {
-            rs = categoriaDAO.getAll();
+            categoriaDAO.alterar(old, descricaoCategoria);
             sucesso = true;
         } catch (Exception ex) {
             sucesso = false;
             mensagem = ex.getMessage();
         }
+        
         /* saída */
        /* Linhas utilizadas para permitir CORS - Início */
         response.addHeader("Access-Control-Allow-Origin", "*");
@@ -56,19 +52,12 @@ public class CategoriaServlet extends HttpServlet {
             out.println("{");
             if (sucesso) {
                 out.println("\"sucesso\": true,");
-                out.println("categorias:");
-                while(rs.next()){
-                    out.println(rs.getString("id_categoria")+ ":" + rs.getString("descricao_categoria") + ",");
-                }
-                out.println("\"isAdmin\": " + isAdmin);
+                out.println("\"categoria\": \"" + descricaoCategoria + "\",");
             } else {
                 out.println("\"sucesso\": false,");
                 out.println("\"error\": \"" + mensagem + "\"");
             }
             out.println("}");
-        } catch (SQLException ex) {
-            Logger.getLogger(CategoriaServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
 }

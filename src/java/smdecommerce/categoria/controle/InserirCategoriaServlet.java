@@ -21,26 +21,25 @@ import smdecommerce.categoria.modelo.CategoriaDAO;
  *
  * @author ivalm
  */
-public class CategoriaServlet extends HttpServlet {
+public class InserirCategoriaServlet extends HttpServlet {
     
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         /* entrada */
         String descricaoCategoria = request.getParameter("descricaoCategoria");
-        Boolean isAdmin = false;
         /* processamento */
         CategoriaDAO categoriaDAO = new CategoriaDAO();
         boolean sucesso = false;
         String mensagem = null;
-         ResultSet rs = null;
         try {
-            rs = categoriaDAO.getAll();
+            categoriaDAO.inserir(descricaoCategoria);
             sucesso = true;
         } catch (Exception ex) {
             sucesso = false;
             mensagem = ex.getMessage();
         }
+        
         /* saída */
        /* Linhas utilizadas para permitir CORS - Início */
         response.addHeader("Access-Control-Allow-Origin", "*");
@@ -56,19 +55,12 @@ public class CategoriaServlet extends HttpServlet {
             out.println("{");
             if (sucesso) {
                 out.println("\"sucesso\": true,");
-                out.println("categorias:");
-                while(rs.next()){
-                    out.println(rs.getString("id_categoria")+ ":" + rs.getString("descricao_categoria") + ",");
-                }
-                out.println("\"isAdmin\": " + isAdmin);
+                out.println("\"categoria\": \"" + descricaoCategoria + "\",");
             } else {
                 out.println("\"sucesso\": false,");
                 out.println("\"error\": \"" + mensagem + "\"");
             }
             out.println("}");
-        } catch (SQLException ex) {
-            Logger.getLogger(CategoriaServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
 }

@@ -1,9 +1,11 @@
 package smdecommerce.categoria.modelo;
 
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Random;
 import smdecommerce.application.DatabaseConnection;
 
@@ -27,7 +29,7 @@ public class CategoriaDAO {
     public Categoria obter(int id) throws Exception {
         Categoria categoria = null;
         
-        String SQLQuery = "SELECT id, descricao_categoria FROM categoria WHERE id = ?";
+        String SQLQuery = "SELECT id, descricao_categoria FROM categoria WHERE id_categoria = ?";
         preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
         
         preparedStatement.setInt(1, id);
@@ -58,7 +60,6 @@ public class CategoriaDAO {
      * @throws Exception
      */
     public void inserir(String descricaoCategoria) throws Exception {
-        Class.forName("org.postgresql.Driver");
         String SQLQuery = "INSERT INTO categoria (id_categoria, descricao_categoria) VALUES (?, ?)";
         preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
         preparedStatement.setInt(1, new Random().nextInt(100000));
@@ -67,7 +68,36 @@ public class CategoriaDAO {
         preparedStatement.close();
         dbconnection.closeConnection();
         if (resultado != 1) {
-            throw new Exception("Não foi possível inserir o categoria");
+            throw new Exception("Não foi possível inserir a categoria");
         }
+    }
+    
+    public ResultSet getAll() throws Exception {
+        String SQLQuery = "SELECT * FROM categoria";
+        preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
+        ResultSet rs = preparedStatement.executeQuery();
+        preparedStatement.close();
+        dbconnection.closeConnection();
+        
+        return rs;
+    }
+    
+    public void remover(int id) throws Exception {
+        String SQLQuery = "DELETE FROM categoria WHERE id_categoria = ?";
+        preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
+        preparedStatement.setInt(1, id);
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
+        dbconnection.closeConnection();
+    }
+    
+    public void alterar(String old, String descricaoCategoria) throws Exception {
+        String SQLQuery = "UPDATE categoria SET descricao_categoria = ? WHERE descricao_categoria = ?";
+        preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
+        preparedStatement.setString(1, descricaoCategoria);
+        preparedStatement.setString(2, old);
+        int resultado = preparedStatement.executeUpdate();
+        preparedStatement.close();
+        dbconnection.closeConnection();
     }
 }

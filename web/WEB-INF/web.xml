@@ -5,6 +5,18 @@
         <servlet-class>smdecommerce.categoria.controle.CategoriaServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>InserirCategoriaServlet</servlet-name>
+        <servlet-class>smdecommerce.categoria.controle.InserirCategoriaServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteCategoriaServlet</servlet-name>
+        <servlet-class>smdecommerce.categoria.controle.DeleteCategoriaServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateCategoriaServlet</servlet-name>
+        <servlet-class>smdecommerce.categoria.controle.UpdateCategoriaServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>NovoClienteServlet</servlet-name>
         <servlet-class>smdecommerce.usuario.controle.NovoClienteServlet</servlet-class>
     </servlet>
@@ -27,6 +39,18 @@
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>InserirCategoriaServlet</servlet-name>
+        <url-pattern>/InserirCategoria</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>UpdateCategoriaServlet</servlet-name>
+        <url-pattern>/UpdateCategoria</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>DeleteCategoriaServlet</servlet-name>
+        <url-pattern>/DeleteCategoria</url-pattern>
     </servlet-mapping>
      <servlet-mapping>
         <servlet-name>CategoriaServlet</servlet-name>
