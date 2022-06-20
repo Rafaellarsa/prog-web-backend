@@ -40,21 +40,21 @@
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/Logout</url-pattern>
     </servlet-mapping>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>InserirCategoriaServlet</servlet-name>
         <url-pattern>/InserirCategoria</url-pattern>
     </servlet-mapping>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>UpdateCategoriaServlet</servlet-name>
         <url-pattern>/UpdateCategoria</url-pattern>
     </servlet-mapping>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>DeleteCategoriaServlet</servlet-name>
         <url-pattern>/DeleteCategoria</url-pattern>
     </servlet-mapping>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>CategoriaServlet</servlet-name>
-        <url-pattern>/Categoria</url-pattern>
+        <url-pattern>/Categorias</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

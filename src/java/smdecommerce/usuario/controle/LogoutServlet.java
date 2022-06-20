@@ -26,7 +26,6 @@ public class LogoutServlet extends HttpServlet {
         
         /* Linhas utilizadas para permitir CORS - Início */
         response.addHeader("Access-Control-Allow-Origin", "*");
-        response.addHeader("Access-Control-Allow-Headers", "Authorization");
         response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");;
         response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
         response.addHeader("Access-Control-Max-Age", "1728000");
@@ -34,12 +33,12 @@ public class LogoutServlet extends HttpServlet {
         
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
-        response.sendRedirect("index.jsp");
-//        try (PrintWriter out = response.getWriter()) {
-//            out.println("{");
-//            out.println("\"mensagem\":  \"Sua sessão foi encerrada\"");
-//            out.println("}");
-//        }
+//        response.sendRedirect("index.jsp");
+        try (PrintWriter out = response.getWriter()) {
+            out.println("{");
+            out.println("\"mensagem\":  \"Sua sessão foi encerrada\"");
+            out.println("}");
+        }
     }
 
 }

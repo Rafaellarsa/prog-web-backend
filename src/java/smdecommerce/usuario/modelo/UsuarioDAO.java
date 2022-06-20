@@ -2,6 +2,7 @@ package smdecommerce.usuario.modelo;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Random;
 import smdecommerce.application.DatabaseConnection;
 
@@ -117,5 +118,54 @@ public class UsuarioDAO {
             throw new Exception("Não foi possível inserir o usuário");
         }
     
+    }
+    /**
+     * Método utilizado para remover um usuário
+     *
+     * @param id
+     * @throws Exception
+     */
+    public String deletarUsuario(int id) throws Exception {
+        String msg = "";
+        try{
+            String SQLQuery = "DELETE FROM usuario WHERE id_usuario = ?";   
+            preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
+            preparedStatement.setInt(1, id);
+
+            int result = preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+            dbconnection.closeConnection();
+
+            msg = result + " usuário foi excluído";
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return msg;
+    }
+    
+    public String atualizarUsuario(String nome, String endereco, String email, String login, String senha, int id) throws Exception {
+        String msg = "";
+        try {
+            String SQLQuery = "UPDATE usuario SET nome_usuario = ?, endereco_usuario = ?, email_usuario = ?, login_usuario = ?, senha_usuario = ? WHERE id_usuario = ?";
+            preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
+
+            preparedStatement.setString(1, nome);
+            preparedStatement.setString(2, endereco);
+            preparedStatement.setString(3, email);
+            preparedStatement.setString(4, login);
+            preparedStatement.setString(5, senha);
+            preparedStatement.setInt(6, id);
+
+            int resultado = preparedStatement.executeUpdate();
+            msg = resultado + " usuário atualizado.";
+            
+            preparedStatement.close();
+            dbconnection.closeConnection();
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return msg;
     }
 }

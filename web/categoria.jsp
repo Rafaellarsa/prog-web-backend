@@ -45,7 +45,7 @@
          </form>
          
          <h3>Listar categorias</h3>
-         <form action="Categoria" method="get">
+         <form action="Categorias" method="get">
              <input type="submit" value="Listar" />
          </form>
          <a href="index.jsp">Voltar</a>
