@@ -17,26 +17,24 @@ import smdecommerce.categoria.modelo.CategoriaDAO;
  *
  * @author ivalm
  */
-public class InserirCategoriaServlet extends HttpServlet {
-    
+public class DeletarCategoriaServlet extends HttpServlet {
+
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
         /* entrada */
-        String descricaoCategoria = request.getParameter("descricaoCategoria");
+        String id = request.getParameter("id");
         /* processamento */
         CategoriaDAO categoriaDAO = new CategoriaDAO();
-        boolean sucesso = false;
+        boolean sucesso;
         String mensagem = null;
         try {
-            categoriaDAO.inserir(descricaoCategoria);
+            categoriaDAO.remover(Integer.parseInt(id));
             sucesso = true;
         } catch (Exception ex) {
             sucesso = false;
             mensagem = ex.getMessage();
         }
-        
         /* saída */
        /* Linhas utilizadas para permitir CORS - Início */
         response.addHeader("Access-Control-Allow-Origin", "*");
@@ -51,12 +49,14 @@ public class InserirCategoriaServlet extends HttpServlet {
             out.println("{");
             if (sucesso) {
                 out.println("\"sucesso\": true,");
-                out.println("\"categoria\": \"" + descricaoCategoria + "\",");
+                out.println("\"categoria\": \"" + id + "\",");
             } else {
                 out.println("\"sucesso\": false,");
+                out.println("\"categoria\": \"" + id + "\",");
                 out.println("\"error\": \"" + mensagem + "\"");
             }
             out.println("}");
         }
     }
+    
 }

@@ -13,12 +13,12 @@
         <servlet-class>smdecommerce.categoria.controle.ListarCategoriasServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>InserirCategoriaServlet</servlet-name>
-        <servlet-class>smdecommerce.categoria.controle.InserirCategoriaServlet</servlet-class>
+        <servlet-name>NovaCategoriaServlet</servlet-name>
+        <servlet-class>smdecommerce.categoria.controle.NovaCategoriaServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>DeleteCategoriaServlet</servlet-name>
-        <servlet-class>smdecommerce.categoria.controle.DeleteCategoriaServlet</servlet-class>
+        <servlet-name>DeletarCategoriaServlet</servlet-name>
+        <servlet-class>smdecommerce.categoria.controle.DeletarCategoriaServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UpdateCategoriaServlet</servlet-name>
@@ -31,6 +31,14 @@
     <servlet>
         <servlet-name>NovoProdutoServlet</servlet-name>
         <servlet-class>smdecommerce.produto.controle.NovoProdutoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeletarProdutoServlet</servlet-name>
+        <servlet-class>smdecommerce.produto.controle.DeletarProdutoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AtualizarProdutoServlet</servlet-name>
+        <servlet-class>smdecommerce.produto.controle.AtualizarProdutoServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ListarProdutosServlet</servlet-name>
@@ -53,16 +61,16 @@
         <url-pattern>/Logout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>InserirCategoriaServlet</servlet-name>
-        <url-pattern>/InserirCategoria</url-pattern>
+        <servlet-name>NovaCategoriaServlet</servlet-name>
+        <url-pattern>/NovaCategoria</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UpdateCategoriaServlet</servlet-name>
         <url-pattern>/UpdateCategoria</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>DeleteCategoriaServlet</servlet-name>
-        <url-pattern>/DeleteCategoria</url-pattern>
+        <servlet-name>DeletarCategoriaServlet</servlet-name>
+        <url-pattern>/DeletarCategoria</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ListarCategoriasServlet</servlet-name>
@@ -71,6 +79,14 @@
     <servlet-mapping>
         <servlet-name>NovoProdutoServlet</servlet-name>
         <url-pattern>/NovoProduto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeletarProdutoServlet</servlet-name>
+        <url-pattern>/DeletarProduto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AtualizarProdutoServlet</servlet-name>
+        <url-pattern>/AtualizarProduto</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ListarProdutosServlet</servlet-name>

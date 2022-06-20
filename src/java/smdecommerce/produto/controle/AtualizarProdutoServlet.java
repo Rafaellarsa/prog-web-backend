@@ -15,9 +15,9 @@ import smdecommerce.produto.modelo.ProdutoDAO;
  *
  * @author SilvaVan
  */
-public class AtualizaProdutoServlet {
+public class AtualizarProdutoServlet {
     
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     
         String nome = request.getParameter("nome");
         String desc = request.getParameter("descricao");
@@ -57,12 +57,5 @@ public class AtualizaProdutoServlet {
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
-        
-        // primeiro faz funcionar, depois faz direito
-        out.print("[");
-        out.print(json);
-        out.print("]");
-
     }
-
 }
