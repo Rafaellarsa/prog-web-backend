@@ -16,7 +16,7 @@ import smdecommerce.produto.modelo.ProdutoDAO;
  * @author SilvaVan
  */
 public class AtualizarProdutoServlet {
-    
+
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String nome = request.getParameter("nome");
@@ -26,25 +26,27 @@ public class AtualizarProdutoServlet {
         int qntde = Integer.parseInt(request.getParameter("qntde"));
         int id_categoria = Integer.parseInt(request.getParameter("id_categoria"));
         int id_produto = Integer.parseInt(request.getParameter("id_produto"));
-        
+
         //ProdutoDao produtoDao = new ProdutoDao();
         ProdutoDAO produtoDao = new ProdutoDAO();
-        
+
         String mensagem = null;
         boolean atualizou = false;
-        
+
         try {
+            produtoDao.atualizarProduto(nome, desc, preco, foto, qntde, id_categoria, id_produto);
             atualizou = true;
-            mensagem = produtoDao.atualizarProduto(nome, desc, preco, foto, qntde, id_categoria, id_produto);
+            mensagem = "Produto atualizado com sucesso";
+
         } catch (Exception ex) {
             mensagem = ex.getMessage();
         }
-        
+
         //Transforma a msg em json
         String json = "";
         json += "{";
-            json += "\"atualizou\":" + atualizou + ", ";
-            json += "\"mensagem\":" + mensagem;
+        json += "\"atualizou\":" + atualizou + ", ";
+        json += "\"mensagem\":" + mensagem;
         json += "}";
 
         //Conf cors 
@@ -52,7 +54,7 @@ public class AtualizarProdutoServlet {
         response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
         response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
         response.addHeader("Access-Control-Max-Age", "1728000");
-        
+
         //Envio JSON
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");

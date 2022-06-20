@@ -180,50 +180,44 @@ public class ProdutoDAO {
         return produtos;
     }
 
-    public String deletarProduto(int id) throws Exception {
-        String msg = "";
-        try {
-            String SQLQuery = "DELETE FROM produto WHERE id_produto = ?";
-            preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
-            preparedStatement.setInt(1, id);
+    public void deletarProduto(int id) throws Exception {
+        boolean sucesso = false;
+        
+        String SQLQuery = "DELETE FROM produto WHERE id_produto = ?";
+        preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
+        preparedStatement.setInt(1, id);
 
-            int result = preparedStatement.executeUpdate();
+        sucesso = (preparedStatement.executeUpdate() == 1);
 
-            preparedStatement.close();
-            dbconnection.closeConnection();
+        preparedStatement.close();
+        dbconnection.closeConnection();
 
-            msg = result + " produto foi excluído";
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (!sucesso) {
+            throw new Exception("Erro ao deletar o produto");
         }
-        return msg;
     }
 
-    public String atualizarProduto(String nome, String desc, double preco, String foto, int qtde, int id_categoria, int id_produto) throws Exception {
-        String msg = "";
-        try {
-            String SQLQuery = "UPDATE produto SET nome_produto = ?, descricao_produto = ?, preco_produto = ?, foto_produto = ?, quantidade_produto = ?, id_categoria_produto = ? WHERE id_produto = ?";
-            preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
+    public void atualizarProduto(String nome, String desc, double preco, String foto, int qtde, int id_categoria, int id_produto) throws Exception {
+        boolean sucesso = false;
 
-            preparedStatement.setString(1, nome);
-            preparedStatement.setString(2, desc);
-            preparedStatement.setDouble(3, preco);
-            preparedStatement.setString(4, foto);
-            preparedStatement.setInt(5, qtde);
-            preparedStatement.setInt(6, id_categoria);
-            preparedStatement.setInt(7, id_produto);
+        String SQLQuery = "UPDATE produto SET nome_produto = ?, descricao_produto = ?, preco_produto = ?, foto_produto = ?, quantidade_produto = ?, id_categoria_produto = ? WHERE id_produto = ?";
+        preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
 
-            int resultado = preparedStatement.executeUpdate();
-            msg = resultado + " produtos atualizados.";
-            
-            preparedStatement.close();
-            dbconnection.closeConnection();
-            
-        } catch (SQLException e) {
-            e.printStackTrace();
+        preparedStatement.setString(1, nome);
+        preparedStatement.setString(2, desc);
+        preparedStatement.setDouble(3, preco);
+        preparedStatement.setString(4, foto);
+        preparedStatement.setInt(5, qtde);
+        preparedStatement.setInt(6, id_categoria);
+        preparedStatement.setInt(7, id_produto);
+
+        sucesso = (preparedStatement.executeUpdate() == 1);
+
+        preparedStatement.close();
+        dbconnection.closeConnection();
+
+        if (!sucesso) {
+            throw new Exception("Não foi possível atualizar a foto do produto");
         }
-        return msg;
     }
-
 }

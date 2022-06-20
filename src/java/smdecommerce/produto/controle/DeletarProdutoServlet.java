@@ -30,7 +30,7 @@ public class DeletarProdutoServlet {
         try {
             produtoDao.deletarProduto(id_produto);
             deletou = true;
-            mensagem = "Produto deletado";
+            mensagem = "Produto deletado com sucesso";
         } catch (Exception ex) {
             deletou = false;
             mensagem = ex.getMessage();
