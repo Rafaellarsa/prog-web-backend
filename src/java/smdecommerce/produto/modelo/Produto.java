@@ -125,11 +125,10 @@ public class Produto implements Serializable{
             json += "\"nome\":\"" + nome + "\", ";
             json += "\"descricao\":\"" + descricao + "\", ";
             json += "\"preco\":" + preco + ", ";
-            json += "\"foto\":" + foto + ", ";
+            json += "\"foto\":\"" + foto + "\", ";
             json += "\"id_categoria\":" + id_categoria + ", ";
             json += "\"quantidade\":" + qntde;
         json += "}";
         return json;
     }
-    
 }

@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-        <servlet-name>CategoriaServlet</servlet-name>
-        <servlet-class>smdecommerce.categoria.controle.CategoriaServlet</servlet-class>
+        <servlet-name>LoginClienteServlet</servlet-name>
+        <servlet-class>smdecommerce.usuario.controle.LoginClienteServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>smdecommerce.usuario.controle.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListarCategoriasServlet</servlet-name>
+        <servlet-class>smdecommerce.categoria.controle.ListarCategoriasServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>InserirCategoriaServlet</servlet-name>
@@ -21,12 +29,16 @@
         <servlet-class>smdecommerce.usuario.controle.NovoClienteServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>LoginClienteServlet</servlet-name>
-        <servlet-class>smdecommerce.usuario.controle.LoginClienteServlet</servlet-class>
+        <servlet-name>NovoProdutoServlet</servlet-name>
+        <servlet-class>smdecommerce.produto.controle.NovoProdutoServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>smdecommerce.usuario.controle.LogoutServlet</servlet-class>
+        <servlet-name>ListarProdutosServlet</servlet-name>
+        <servlet-class>smdecommerce.produto.controle.ListarProdutosServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListarProdutosEmEstoqueServlet</servlet-name>
+        <servlet-class>smdecommerce.produto.controle.ListarProdutosEmEstoqueServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>NovoClienteServlet</servlet-name>
@@ -53,8 +65,20 @@
         <url-pattern>/DeleteCategoria</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>CategoriaServlet</servlet-name>
-        <url-pattern>/Categorias</url-pattern>
+        <servlet-name>ListarCategoriasServlet</servlet-name>
+        <url-pattern>/ListarCategorias</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NovoProdutoServlet</servlet-name>
+        <url-pattern>/NovoProduto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListarProdutosServlet</servlet-name>
+        <url-pattern>/ListarProdutos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListarProdutosEmEstoqueServlet</servlet-name>
+        <url-pattern>/ListarProdutosEmEstoque</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

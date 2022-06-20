@@ -1,16 +1,7 @@
 -- Database: e_smd
 
 -- DROP DATABASE IF EXISTS e_smd
-
-CREATE DATABASE e_smd
-    WITH 
-    OWNER = postgres
-    ENCODING = 'UTF8'
-    LC_COLLATE = 'Portuguese_Brazil.1252'
-    LC_CTYPE = 'Portuguese_Brazil.1252'
-    TABLESPACE = pg_default
-    CONNECTION LIMIT = -1;
-
+    
 -- Table: public.categoria
 
 -- DROP TABLE IF EXISTS public.categoria;
@@ -42,14 +33,15 @@ CREATE TABLE IF NOT EXISTS public.produto
     nome_produto character varying(50) COLLATE pg_catalog."default" NOT NULL,
     descricao_produto character varying(50) COLLATE pg_catalog."default" NOT NULL,
     preco_produto integer NOT NULL,
-    foto_produto character varying(60) COLLATE pg_catalog."default" NOT NULL,
+    foto_produto character varying(2000) COLLATE pg_catalog."default" NOT NULL,
     quantidade_produto integer NOT NULL,
     id_categoria_produto integer NOT NULL DEFAULT nextval('produto_id_categoria_produto_seq'::regclass),
     CONSTRAINT produto_pkey PRIMARY KEY (id_produto),
-    CONSTRAINT fk_id_categoria FOREIGN KEY (id_produto)
+    CONSTRAINT fk_id_categoria FOREIGN KEY (id_categoria_produto)
         REFERENCES public.categoria (id_categoria) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
+        NOT VALID
 )
 
 TABLESPACE pg_default;
@@ -57,32 +49,6 @@ TABLESPACE pg_default;
 ALTER TABLE IF EXISTS public.produto
     OWNER to postgres;
     
--- Table: public.categoria_produto
-
--- DROP TABLE IF EXISTS public.categoria_produto;
-
-CREATE SEQUENCE categoria_produto_id_categoria_seq AS integer;
-CREATE SEQUENCE categoria_produto_id_produto_seq AS integer;
-
-CREATE TABLE IF NOT EXISTS public.categoria_produto
-(
-    id_categoria integer NOT NULL DEFAULT nextval('categoria_produto_id_categoria_seq'::regclass),
-    id_produto integer NOT NULL DEFAULT nextval('categoria_produto_id_produto_seq'::regclass),
-    CONSTRAINT categoria_produto_pkey PRIMARY KEY (id_categoria, id_produto),
-    CONSTRAINT fk_id_categoria FOREIGN KEY (id_categoria)
-        REFERENCES public.categoria (id_categoria) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_id_produto FOREIGN KEY (id_produto)
-        REFERENCES public.produto (id_produto) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.categoria_produto
-    OWNER to postgres;
     
 -- Table: public.usuario
 

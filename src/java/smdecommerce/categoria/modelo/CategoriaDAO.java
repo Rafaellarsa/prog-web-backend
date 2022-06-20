@@ -6,6 +6,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import smdecommerce.application.DatabaseConnection;
 
@@ -72,14 +74,25 @@ public class CategoriaDAO {
         }
     }
     
-    public ResultSet getAll() throws Exception {
-        String SQLQuery = "SELECT * FROM categoria";
+    @SuppressWarnings("ConvertToTryWithResources")
+    public List<Categoria> listarCategorias() throws Exception {
+        List<Categoria> categorias = new ArrayList<>();
+        String SQLQuery = "SELECT id_categoria, descricao_categoria FROM categoria";
         preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
-        ResultSet rs = preparedStatement.executeQuery();
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()) {
+            Categoria categoria = new Categoria();
+
+            categoria.setId(resultSet.getInt("id_categoria"));
+            categoria.setDescricaoCategoria(resultSet.getString("descricao_categoria"));
+
+            categorias.add(categoria);
+        }
+        resultSet.close();
         preparedStatement.close();
         dbconnection.closeConnection();
-        
-        return rs;
+        return categorias;
     }
     
     public void remover(int id) throws Exception {

@@ -19,8 +19,16 @@ public class Categoria implements Serializable {
         return descricaoCategoria;
     }
 
-    public void setDescricaoCategoria(String nome) {
+    public void setDescricaoCategoria(String descricaoCategoria) {
         this.descricaoCategoria = descricaoCategoria;
     }
     
+        public String toJSON() {
+        String json = "";
+        json += "{";
+            json += "\"id\":" + id + ", ";
+            json += "\"descricaoCategoria\":\"" + descricaoCategoria + "\"";
+        json += "}";
+        return json;
+    }
 }

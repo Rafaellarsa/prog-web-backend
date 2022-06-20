@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import smdecommerce.application.DatabaseConnection;
 
 /**
@@ -28,16 +27,15 @@ public class ProdutoDAO {
     @SuppressWarnings("ConvertToTryWithResources")
     public void cadastrarProduto(String nome, String desc, double preco, String foto, int qtde, int id_categoria) throws Exception {
 
-        String SQLQuery = "INSERT INTO produto (id_produto, nome_produto, descricao_produto, preco_produto, foto_produto, quantidade_produto, id_categoria_produto) VALUES (?, ?, ?, ?, ?, ?)";
+        String SQLQuery = "INSERT INTO produto (nome_produto, descricao_produto, preco_produto, foto_produto, quantidade_produto, id_categoria_produto) VALUES (?, ?, ?, ?, ?, ?)";
         preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
 
-        preparedStatement.setInt(1, new Random().nextInt(100000));
-        preparedStatement.setString(2, nome);
-        preparedStatement.setString(3, desc);
-        preparedStatement.setDouble(4, preco);
-        preparedStatement.setString(5, foto);
-        preparedStatement.setInt(6, qtde);
-        preparedStatement.setInt(7, id_categoria);
+        preparedStatement.setString(1, nome);
+        preparedStatement.setString(2, desc);
+        preparedStatement.setDouble(3, preco);
+        preparedStatement.setString(4, foto);
+        preparedStatement.setInt(5, qtde);
+        preparedStatement.setInt(6, id_categoria);
 
         int resultado = preparedStatement.executeUpdate();
 
@@ -164,7 +162,7 @@ public class ProdutoDAO {
             Produto produto = new Produto();
 
             produto.setId(resultSet.getInt("id_produto"));
-            produto.setDescricao(resultSet.getString("nome_produto"));
+            produto.setNome(resultSet.getString("nome_produto"));
             produto.setDescricao(resultSet.getString("descricao_produto"));
             produto.setPreco(resultSet.getDouble("preco_produto"));
             produto.setFoto(resultSet.getString("foto_produto"));
