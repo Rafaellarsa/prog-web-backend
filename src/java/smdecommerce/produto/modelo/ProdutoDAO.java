@@ -6,7 +6,6 @@ package smdecommerce.produto.modelo;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import smdecommerce.application.DatabaseConnection;
@@ -180,25 +179,23 @@ public class ProdutoDAO {
         return produtos;
     }
 
-    public void deletarProduto(int id) throws Exception {
-        boolean sucesso = false;
-        
+    public void deletarProduto(int id) throws Exception {     
         String SQLQuery = "DELETE FROM produto WHERE id_produto = ?";
         preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
         preparedStatement.setInt(1, id);
 
-        sucesso = (preparedStatement.executeUpdate() == 1);
+        int resultado = preparedStatement.executeUpdate();
 
         preparedStatement.close();
         dbconnection.closeConnection();
 
-        if (!sucesso) {
+        if (resultado != 1) {
             throw new Exception("Erro ao deletar o produto");
         }
     }
 
     public void atualizarProduto(String nome, String desc, double preco, String foto, int qtde, int id_categoria, int id_produto) throws Exception {
-        boolean sucesso = false;
+        boolean sucesso;
 
         String SQLQuery = "UPDATE produto SET nome_produto = ?, descricao_produto = ?, preco_produto = ?, foto_produto = ?, quantidade_produto = ?, id_categoria_produto = ? WHERE id_produto = ?";
         preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);

@@ -1,11 +1,7 @@
 package smdecommerce.categoria.modelo;
 
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -104,11 +100,11 @@ public class CategoriaDAO {
         dbconnection.closeConnection();
     }
     
-    public void alterar(String old, String descricaoCategoria) throws Exception {
-        String SQLQuery = "UPDATE categoria SET descricao_categoria = ? WHERE descricao_categoria = ?";
+    public void alterar(int id, String descricaoCategoria) throws Exception {
+        String SQLQuery = "UPDATE categoria SET descricao_categoria = ? WHERE id_categoria = ?";
         preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
         preparedStatement.setString(1, descricaoCategoria);
-        preparedStatement.setString(2, old);
+        preparedStatement.setInt(2, id);
         int resultado = preparedStatement.executeUpdate();
         preparedStatement.close();
         dbconnection.closeConnection();

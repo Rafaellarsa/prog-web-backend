@@ -7,6 +7,7 @@ package smdecommerce.produto.controle;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import smdecommerce.produto.modelo.ProdutoDAO;
@@ -15,33 +16,27 @@ import smdecommerce.produto.modelo.ProdutoDAO;
  *
  * @author SilvaVan
  */
-public class DeletarProdutoServlet {
+public class DeletarProdutoServlet extends HttpServlet {
 
-    protected void service(HttpServletRequest request, HttpServletResponse response)
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int id_produto = Integer.parseInt(request.getParameter("id_produto"));
+        String id_produto = request.getParameter("id");
 
         ProdutoDAO produtoDao = new ProdutoDAO();
 
-        boolean deletou = false;
-        String mensagem = null;
+        boolean deletou;
+        String mensagem;
 
         try {
-            produtoDao.deletarProduto(id_produto);
+            produtoDao.deletarProduto(Integer.parseInt(id_produto));
             deletou = true;
             mensagem = "Produto deletado com sucesso";
         } catch (Exception ex) {
             deletou = false;
             mensagem = ex.getMessage();
         }
-
-//Transforma a msg em json
-        String json = "";
-        json += "{";
-        json += "\"atualizou\":" + deletou + ", ";
-        json += "\"mensagem\":" + mensagem;
-        json += "}";
 
         //Conf cors 
         response.addHeader("Access-Control-Allow-Origin", "*");
@@ -52,11 +47,17 @@ public class DeletarProdutoServlet {
         //Envio JSON
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
-        PrintWriter out = response.getWriter();
-
-        // primeiro faz funcionar, depois faz direito
-        out.print("[");
-        out.print(json);
-        out.print("]");
+        try (PrintWriter out = response.getWriter()) {
+            out.println("{");
+            if (deletou) {
+                out.println("\"sucesso\": true,");
+                out.println("\"produto\": \"" + id_produto + "\",");
+            } else {
+                out.println("\"sucesso\": false,");
+                out.println("\"produto\": \"" + id_produto + "\",");
+                out.println("\"error\": \"" + mensagem + "\"");
+            }
+            out.println("}");
+        }
     }
 }

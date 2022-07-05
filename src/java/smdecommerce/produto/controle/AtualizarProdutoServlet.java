@@ -7,6 +7,7 @@ package smdecommerce.produto.controle;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import smdecommerce.produto.modelo.ProdutoDAO;
@@ -15,22 +16,24 @@ import smdecommerce.produto.modelo.ProdutoDAO;
  *
  * @author SilvaVan
  */
-public class AtualizarProdutoServlet {
+public class AtualizarProdutoServlet extends HttpServlet {
 
-    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+        
+        int id_produto = Integer.parseInt(request.getParameter("id"));
         String nome = request.getParameter("nome");
         String desc = request.getParameter("descricao");
         double preco = Double.parseDouble(request.getParameter("preco"));
         String foto = request.getParameter("foto");
         int qntde = Integer.parseInt(request.getParameter("qntde"));
         int id_categoria = Integer.parseInt(request.getParameter("id_categoria"));
-        int id_produto = Integer.parseInt(request.getParameter("id_produto"));
 
         //ProdutoDao produtoDao = new ProdutoDao();
         ProdutoDAO produtoDao = new ProdutoDAO();
 
-        String mensagem = null;
+        String mensagem;
         boolean atualizou = false;
 
         try {
@@ -42,22 +45,25 @@ public class AtualizarProdutoServlet {
             mensagem = ex.getMessage();
         }
 
-        //Transforma a msg em json
-        String json = "";
-        json += "{";
-        json += "\"atualizou\":" + atualizou + ", ";
-        json += "\"mensagem\":" + mensagem;
-        json += "}";
-
         //Conf cors 
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, HEAD");
-        response.addHeader("Access-Control-Allow-Headers", "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");
+        response.addHeader("Access-Control-Allow-Headers", "*");
         response.addHeader("Access-Control-Max-Age", "1728000");
-
+        
         //Envio JSON
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
-        PrintWriter out = response.getWriter();
+        try (PrintWriter out = response.getWriter()) {
+            out.println("{");
+            if (atualizou) {
+                out.println("\"sucesso\": true");
+            } else {
+                out.println("\"sucesso\": false");
+                out.println("\"error\": " + mensagem);
+            }
+            out.println("\"nome\": " + nome);
+            out.println("}");
+        }
     }
 }

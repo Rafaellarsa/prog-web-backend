@@ -20,7 +20,7 @@ import smdecommerce.categoria.modelo.CategoriaDAO;
 public class DeletarCategoriaServlet extends HttpServlet {
 
     @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         /* entrada */
         String id = request.getParameter("id");

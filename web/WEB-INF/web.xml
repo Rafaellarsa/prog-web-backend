@@ -21,8 +21,8 @@
         <servlet-class>smdecommerce.categoria.controle.DeletarCategoriaServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>UpdateCategoriaServlet</servlet-name>
-        <servlet-class>smdecommerce.categoria.controle.UpdateCategoriaServlet</servlet-class>
+        <servlet-name>AtualizarCategoriaServlet</servlet-name>
+        <servlet-class>smdecommerce.categoria.controle.AtualizarCategoriaServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>NovoClienteServlet</servlet-name>
@@ -81,8 +81,8 @@
         <url-pattern>/NovaCategoria</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>UpdateCategoriaServlet</servlet-name>
-        <url-pattern>/UpdateCategoria</url-pattern>
+        <servlet-name>AtualizarCategoriaServlet</servlet-name>
+        <url-pattern>/AtualizarCategoria</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DeletarCategoriaServlet</servlet-name>

@@ -17,20 +17,22 @@ import smdecommerce.categoria.modelo.CategoriaDAO;
  *
  * @author ivalm
  */
-public class UpdateCategoriaServlet extends HttpServlet {
+public class AtualizarCategoriaServlet extends HttpServlet {
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+
         /* entrada */
-        String old = request.getParameter("old_descricao_categoria");
+        int id = Integer.parseInt(request.getParameter("id"));
         String descricaoCategoria = request.getParameter("descricao_categoria");
         /* processamento */
         CategoriaDAO categoriaDAO = new CategoriaDAO();
         boolean sucesso = false;
         String mensagem = null;
         try {
-            categoriaDAO.alterar(old, descricaoCategoria);
+            categoriaDAO.alterar(id, descricaoCategoria);
             sucesso = true;
         } catch (Exception ex) {
             sucesso = false;
