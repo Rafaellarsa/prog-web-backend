@@ -72,5 +72,15 @@ public class Vendas implements Serializable{
     public void setId_venda(Integer id_venda) {
         this.id_venda = id_venda;
     }
-     
+    
+    public String toJSON() {
+        String json = "";
+        json += "{";
+            json += "\"id_venda\":" + id_venda + ", ";
+            json += "\"id_cliente_venda\":" + id_cliente_venda + ", ";
+            json += "\"id_produto_venda\":" + id_produto_venda + ", ";
+            json += "\"data_hora_venda\":\"" + data_hora_venda + "\"";
+        json += "}";
+        return json;
+    }
 }
