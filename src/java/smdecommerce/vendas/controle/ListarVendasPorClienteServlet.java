@@ -19,17 +19,19 @@ import smdecommerce.vendas.modelo.VendasDAO;
  *
  * @author Bruno
  */
-public class ListarVendasServlet extends HttpServlet {
+public class ListarVendasPorClienteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         VendasDAO vendasDAO = new VendasDAO();
         List<Vendas> vendas;
         
+        int id = Integer.parseInt(request.getParameter("id"));
+        
         try {
-            vendas = vendasDAO.listarVendas();
+            vendas = vendasDAO.listarVendasPorCliente(id);
         } catch (Exception ex) {
-            vendas = new ArrayList<Vendas>();
+            vendas = new ArrayList<>();
         }
         /* saída */
        /* Linhas utilizadas para permitir CORS - Início */
