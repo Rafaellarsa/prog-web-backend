@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import smdecommerce.produto.modelo.ProdutoDAO;
 import smdecommerce.relatorio.modelo.RelatorioDAO;
 import smdecommerce.vendas.modelo.VendasDAO;
 
@@ -33,6 +34,7 @@ public class EfetuarVendaServlet extends HttpServlet {
         /* processamento */
         VendasDAO vendaDao = new VendasDAO();
         RelatorioDAO relatorioDAO = new RelatorioDAO();
+        ProdutoDAO produtoDAO = new ProdutoDAO();
 
         boolean inseriu = false;
         String mensagem = null;
@@ -41,7 +43,11 @@ public class EfetuarVendaServlet extends HttpServlet {
             vendaDao.cadastrarVenda(id_cliente_venda, ids_produto_venda);
             inseriu = true;
             mensagem = "Operação de venda registrada com sucesso";
-            relatorioDAO.inserirRelatorio("teste", "SAIDA", ids_produto_venda.size());
+            int id_produto = 0;
+            for (int i = 0; i < ids_produto_venda.size(); i++) {
+                id_produto = Integer.parseInt(ids_produto_venda.get(i));
+                relatorioDAO.inserirRelatorio(produtoDAO.consultarProduto(id_produto).getNome(), "SAIDA", ids_produto_venda.size(), id_produto);
+            }        
         } catch (Exception ex) {
             inseriu = false;
             mensagem = ex.getMessage();

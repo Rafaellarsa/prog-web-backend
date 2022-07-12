@@ -27,16 +27,17 @@ public class RelatorioDAO {
     }
     
     @SuppressWarnings("ConvertToTryWithResources")
-    public void inserirRelatorio(String nome_produto, String movimentacao, int quantidade) throws Exception {
+    public void inserirRelatorio(String nome_produto, String movimentacao, int quantidade, int id_produto_relatorio) throws Exception {
         LocalDateTime now = LocalDateTime.now();
         
-        String SQLQuery = "INSERT INTO relatorio (nome_produto, movimentacao, quantidade, data_hora_venda) VALUES (?, ?, ?, ?)";
+        String SQLQuery = "INSERT INTO relatorio (nome_produto, movimentacao, quantidade, id_produto_relatorio, data_hora_venda) VALUES (?, ?, ?, ?, ?)";
         preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
 
         preparedStatement.setString(1, nome_produto);
         preparedStatement.setString(2, movimentacao);
         preparedStatement.setInt(3, quantidade);
-        preparedStatement.setString(4, now.toString());
+        preparedStatement.setInt(4, id_produto_relatorio);
+        preparedStatement.setString(5, now.toString());
 
         int resultado = preparedStatement.executeUpdate();
 
@@ -63,7 +64,7 @@ public class RelatorioDAO {
             relatorio.setMovimentacao(resultSet.getString("movimentacao"));
             relatorio.setQuantidade(resultSet.getInt("quantidade"));
             relatorio.setId_produto(resultSet.getInt("id_produto_relatorio"));
-            relatorio.setData_hora_venda(""+resultSet.getTime("data_hora_venda"));
+            relatorio.setData_hora_venda(""+resultSet.getString("data_hora_venda"));
 
             relatorios.add(relatorio);
         }
