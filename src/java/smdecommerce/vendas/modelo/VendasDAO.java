@@ -6,7 +6,9 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.postgresql.shaded.com.ongres.scram.common.util.Preconditions;
 import smdecommerce.application.DatabaseConnection;
 import smdecommerce.produto.modelo.Produto;
@@ -97,7 +99,31 @@ public class VendasDAO {
         
         ProdutoDAO produtos = new ProdutoDAO();
         
-        //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");  
+        Map<String, Integer> neededItems = new HashMap<String, Integer>();
+        
+        for(int i = 0; i < ids_produto_venda.size(); i++){
+            if(!neededItems.containsKey(ids_produto_venda.get(i).toString())){
+                neededItems.put(ids_produto_venda.get(i).toString(), 1);
+            }
+            else{
+                neededItems.put(ids_produto_venda.get(i).toString(), neededItems.get(ids_produto_venda.get(i).toString()) + 1);
+            }
+        }
+        
+        
+        for(String key: neededItems.keySet()){
+            Integer value = neededItems.get(key);
+            Produto p = produtos.consultarProduto(Integer.parseInt(key));
+            
+            if(p.getQntde() < value){
+                throw new Exception("Sem estoque");
+            }
+            else{
+                produtos.atualizarProduto(p.getNome(), p.getDescricao(), p.getPreco(), p.getFoto(), p.getQntde() - value, p.getId_categoria(), p.getId());
+            }
+        }
+        
+        
         String now = java.time.ZonedDateTime.now().toString();
         
         int resultado = 0;
