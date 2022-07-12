@@ -90,7 +90,7 @@ public class VendasDAO {
         return contador;
     }
 
-    public void cadastrarVenda(int id_cliente_venda, ArrayList<Integer> ids_produto_venda) throws Exception {
+    public void cadastrarVenda(int id_cliente_venda, ArrayList<String> ids_produto_venda) throws Exception {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");  
         LocalDateTime now = LocalDateTime.now();  
         
@@ -102,7 +102,7 @@ public class VendasDAO {
             
             preparedStatement.setString(1, now.toString());
             preparedStatement.setInt(2, id_cliente_venda);
-            preparedStatement.setInt(3, ids_produto_venda.get(i));
+            preparedStatement.setInt(3, Integer.parseInt(ids_produto_venda.get(i)));
             
             resultado = preparedStatement.executeUpdate();
             

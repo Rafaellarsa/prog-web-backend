@@ -57,6 +57,10 @@
         <servlet-class>smdecommerce.produto.controle.ListarProdutosEmEstoqueServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>EfetuarVendaServlet</servlet-name>
+        <servlet-class>smdecommerce.vendas.controle.EfetuarVendaServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>RelatorioServlet</servlet-name>
         <servlet-class>smdecommerce.relatorio.controle.RelatorioServlet</servlet-class>
     </servlet>
@@ -115,6 +119,10 @@
     <servlet-mapping>
         <servlet-name>ListarProdutosEmEstoqueServlet</servlet-name>
         <url-pattern>/ListarProdutosEmEstoque</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EfetuarVendaServlet</servlet-name>
+        <url-pattern>/EfetuarVenda</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RelatorioServlet</servlet-name>

@@ -3,6 +3,7 @@ package smdecommerce.vendas.controle;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,11 +25,9 @@ public class EfetuarVendaServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         /* entrada */
-
-        //String data_e_hora = request.getParameter("data_e_hora");
         int id_cliente_venda = Integer.parseInt(request.getParameter("id_cliente_venda"));
-        ArrayList<Integer> ids_produto_venda = (ArrayList<Integer>)request.getAttribute("ids_produto_venda");
-        //ArrayList<Integer> ids_produto_venda = Integer.parseInt(request.getParameter("ids_produto_venda"));
+        String ids_produtos_string = request.getParameter("ids_produto_venda");
+        ArrayList<String> ids_produto_venda = new ArrayList<>(Arrays.asList(ids_produtos_string.split(",")));
 
         /* processamento */
         VendasDAO vendaDao = new VendasDAO();
