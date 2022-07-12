@@ -6,11 +6,16 @@ package smdecommerce.produto.controle;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import smdecommerce.produto.modelo.Produto;
 import smdecommerce.produto.modelo.ProdutoDAO;
+import smdecommerce.relatorio.modelo.RelatorioDAO;
+import smdecommerce.vendas.modelo.VendasDAO;
 
 /**
  *
@@ -33,6 +38,7 @@ public class NovoProdutoServlet extends HttpServlet{
         /* processamento */
         //ProdutoDao produtoDao = new ProdutoDao();
         ProdutoDAO produtoDao = new ProdutoDAO();
+        RelatorioDAO relatorioDAO = new RelatorioDAO();
        
         boolean inseriu = false;
         String mensagem = null;
@@ -40,6 +46,8 @@ public class NovoProdutoServlet extends HttpServlet{
             produtoDao.cadastrarProduto(nome, desc, preco, foto, qntde, id_categoria);
             inseriu = true;
             mensagem = "Produto cadastrado com sucesso";
+            List<Produto> produtos = produtoDao.consultarProdutoPorNome(nome);
+            relatorioDAO.inserirRelatorio(nome, "ENTRADA", qntde, produtos.get(0).getId());
         } catch (Exception ex) {
             inseriu = false;
             mensagem = ex.getMessage();

@@ -86,7 +86,7 @@ public class ProdutoDAO {
 
     public List<Produto> consultarProdutoPorNome(String nome) throws Exception {
         List<Produto> produtos = new ArrayList<>();
-        String SQLQuery = "SELECT id_produto, nome_produto, descricao_produto, preco_produto, foto_produto, quantidade_produto, id_categoria_produto FROM produto LIKE %?%";
+        String SQLQuery = "SELECT id_produto, nome_produto, descricao_produto, preco_produto, foto_produto, quantidade_produto, id_categoria_produto FROM produto WHERE nome_produto LIKE '%?%'";
         preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
         preparedStatement.setString(1, nome);
 
