@@ -57,6 +57,22 @@
         <servlet-class>smdecommerce.produto.controle.ListarProdutosEmEstoqueServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>EfetuarVendaServlet</servlet-name>
+        <servlet-class>smdecommerce.vendas.controle.EfetuarVendaServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ExcluirOperacaoServlet</servlet-name>
+        <servlet-class>smdecommerce.vendas.controle.ExcluirOperacaoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListarVendasServlet</servlet-name>
+        <servlet-class>smdecommerce.vendas.controle.ListarVendasServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListarVendasPorClienteServlet</servlet-name>
+        <servlet-class>smdecommerce.vendas.controle.ListarVendasPorClienteServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>RelatorioServlet</servlet-name>
         <servlet-class>smdecommerce.relatorio.controle.RelatorioServlet</servlet-class>
     </servlet>
@@ -115,6 +131,22 @@
     <servlet-mapping>
         <servlet-name>ListarProdutosEmEstoqueServlet</servlet-name>
         <url-pattern>/ListarProdutosEmEstoque</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EfetuarVendaServlet</servlet-name>
+        <url-pattern>/EfetuarVenda</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExcluirOperacaoServlet</servlet-name>
+        <url-pattern>/ExcluirOperacao</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListarVendasServlet</servlet-name>
+        <url-pattern>/ListarVendas</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListarVendasPorClienteServlet</servlet-name>
+        <url-pattern>/ListarVendasPorCliente</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RelatorioServlet</servlet-name>

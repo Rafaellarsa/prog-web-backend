@@ -71,7 +71,5 @@ public class RelatorioDAO {
         preparedStatement.close();
         dbconnection.closeConnection();
         return relatorios;
-    }
-
-    
+    }    
 }
