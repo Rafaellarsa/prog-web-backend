@@ -2,12 +2,15 @@ package smdecommerce.vendas.modelo;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import org.postgresql.shaded.com.ongres.scram.common.util.Preconditions;
 import smdecommerce.application.DatabaseConnection;
+import smdecommerce.produto.modelo.Produto;
+import smdecommerce.produto.modelo.ProdutoDAO;
 
 public class VendasDAO {
 
@@ -91,16 +94,25 @@ public class VendasDAO {
     }
 
     public void cadastrarVenda(int id_cliente_venda, ArrayList<String> ids_produto_venda) throws Exception {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");  
-        LocalDateTime now = LocalDateTime.now();  
+        
+        ProdutoDAO produtos = new ProdutoDAO();
+        
+        //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");  
+        String now = Instant.now().toString();
         
         int resultado = 0;
         
         for(int i = 0; i < ids_produto_venda.size(); i++){
+            
+            Produto prod = produtos.consultarProduto(Integer.parseInt(ids_produto_venda.get(i)));
+            
+            int estoque = prod.getQntde();
+            
+            
             String SQLQuery = "INSERT INTO venda (data_e_hora, id_cliente_venda, id_produto_venda) VALUES (?, ?, ?)";
             preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
             
-            preparedStatement.setString(1, now.toString());
+            preparedStatement.setString(1, now);
             preparedStatement.setInt(2, id_cliente_venda);
             preparedStatement.setInt(3, Integer.parseInt(ids_produto_venda.get(i)));
             
