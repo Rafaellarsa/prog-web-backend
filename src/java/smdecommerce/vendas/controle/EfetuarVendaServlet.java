@@ -2,6 +2,8 @@ package smdecommerce.vendas.controle;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,9 +25,10 @@ public class EfetuarVendaServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         /* entrada */
 
-        String data_e_hora = request.getParameter("data_e_hora");
+        //String data_e_hora = request.getParameter("data_e_hora");
         int id_cliente_venda = Integer.parseInt(request.getParameter("id_cliente_venda"));
-        int id_produto_venda = Integer.parseInt(request.getParameter("id_produto_venda"));
+        ArrayList<Integer> ids_produto_venda = (ArrayList<Integer>)request.getAttribute("ids_produto_venda");
+        //ArrayList<Integer> ids_produto_venda = Integer.parseInt(request.getParameter("ids_produto_venda"));
 
         /* processamento */
         VendasDAO vendaDao = new VendasDAO();
@@ -34,7 +37,7 @@ public class EfetuarVendaServlet extends HttpServlet {
         String mensagem = null;
         
         try {
-            vendaDao.cadastrarVenda(data_e_hora, id_cliente_venda, id_produto_venda);
+            vendaDao.cadastrarVenda(id_cliente_venda, ids_produto_venda);
             inseriu = true;
             mensagem = "Operação de venda registrada com sucesso";
         } catch (Exception ex) {

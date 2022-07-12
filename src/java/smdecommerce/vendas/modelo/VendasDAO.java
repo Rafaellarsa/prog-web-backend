@@ -2,6 +2,8 @@ package smdecommerce.vendas.modelo;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import org.postgresql.shaded.com.ongres.scram.common.util.Preconditions;
@@ -88,22 +90,28 @@ public class VendasDAO {
         return contador;
     }
 
-    public void cadastrarVenda(String data_e_hora, int id_cliente_venda, int id_produto_venda) throws Exception {
-
-        String SQLQuery = "INSERT INTO venda (data_e_hora, id_cliente_venda, id_produto_venda) VALUES (?, ?, ?)";
-        preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
-
-        preparedStatement.setString(1, data_e_hora);
-        preparedStatement.setInt(2, id_cliente_venda);
-        preparedStatement.setInt(3, id_produto_venda);
-
-        int resultado = preparedStatement.executeUpdate();
-
-        preparedStatement.close();
-        dbconnection.closeConnection();
-
-        if (resultado != 1) {
-            throw new Exception("Erro ao registrar a operação de venda");
+    public void cadastrarVenda(int id_cliente_venda, ArrayList<Integer> ids_produto_venda) throws Exception {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");  
+        LocalDateTime now = LocalDateTime.now();  
+        
+        int resultado = 0;
+        
+        for(int i = 0; i < ids_produto_venda.size(); i++){
+            String SQLQuery = "INSERT INTO venda (data_e_hora, id_cliente_venda, id_produto_venda) VALUES (?, ?, ?)";
+            preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
+            
+            preparedStatement.setString(1, now.toString());
+            preparedStatement.setInt(2, id_cliente_venda);
+            preparedStatement.setInt(3, ids_produto_venda.get(i));
+            
+            resultado = preparedStatement.executeUpdate();
+            
+            preparedStatement.close();
+            dbconnection.closeConnection();
+            
+            if (resultado != 1) {
+                throw new Exception("Erro ao registrar a operação de venda");
+            }
         }
     }
 
