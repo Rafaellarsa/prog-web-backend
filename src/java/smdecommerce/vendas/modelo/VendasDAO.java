@@ -98,7 +98,7 @@ public class VendasDAO {
         ProdutoDAO produtos = new ProdutoDAO();
         
         //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");  
-        String now = Instant.now().toString();
+        String now = java.time.ZonedDateTime.now().toString();
         
         int resultado = 0;
         
@@ -109,7 +109,7 @@ public class VendasDAO {
             int estoque = prod.getQntde();
             
             
-            String SQLQuery = "INSERT INTO venda (data_e_hora, id_cliente_venda, id_produto_venda) VALUES (?, ?, ?)";
+            String SQLQuery = "INSERT INTO venda (data_hora_venda, id_cliente_venda, id_produto_venda) VALUES (?, ?, ?)";
             preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
             
             preparedStatement.setString(1, now);

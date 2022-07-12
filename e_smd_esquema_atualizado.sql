@@ -85,7 +85,7 @@ CREATE SEQUENCE venda_id_produto_venda_seq AS integer;
 CREATE TABLE IF NOT EXISTS public.venda
 (
     id_venda integer NOT NULL DEFAULT nextval('venda_id_venda_seq'::regclass),
-    data_hora_venda time with time zone NOT NULL,
+    data_hora_venda character varying(60) NOT NULL,
     id_cliente_venda integer NOT NULL DEFAULT nextval('venda_id_cliente_venda_seq'::regclass),
     id_produto_venda integer NOT NULL DEFAULT nextval('venda_id_produto_venda_seq'::regclass),
     CONSTRAINT venda_pkey PRIMARY KEY (id_venda),
