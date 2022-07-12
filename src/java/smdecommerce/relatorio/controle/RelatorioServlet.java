@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import smdecommerce.categoria.modelo.CategoriaDAO;
 import smdecommerce.relatorio.modelo.RelatorioDAO;
 import smdecommerce.relatorio.modelo.Relatorio;
 

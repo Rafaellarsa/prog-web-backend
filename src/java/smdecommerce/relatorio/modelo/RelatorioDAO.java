@@ -7,6 +7,8 @@ package smdecommerce.relatorio.modelo;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import smdecommerce.application.DatabaseConnection;
@@ -23,7 +25,29 @@ public class RelatorioDAO {
     public RelatorioDAO() {
         dbconnection = new DatabaseConnection();
     }
+    
+    @SuppressWarnings("ConvertToTryWithResources")
+    public void inserirRelatorio(String nome_produto, String movimentacao, int quantidade) throws Exception {
+        LocalDateTime now = LocalDateTime.now();
+        
+        String SQLQuery = "INSERT INTO relatorio (nome_produto, movimentacao, quantidade, data_hora_venda) VALUES (?, ?, ?, ?)";
+        preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
 
+        preparedStatement.setString(1, nome_produto);
+        preparedStatement.setString(2, movimentacao);
+        preparedStatement.setInt(3, quantidade);
+        preparedStatement.setString(4, now.toString());
+
+        int resultado = preparedStatement.executeUpdate();
+
+        preparedStatement.close();
+        dbconnection.closeConnection();
+
+        if (resultado != 1) {
+            throw new Exception("Erro ao cadastrar o relatorio");
+        }
+    }
+    
     @SuppressWarnings("ConvertToTryWithResources")
     public List<Relatorio> listarRelatorios() throws Exception {
         List<Relatorio> relatorios = new ArrayList<>();
