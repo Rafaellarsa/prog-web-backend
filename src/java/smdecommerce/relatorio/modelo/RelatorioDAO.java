@@ -27,7 +27,7 @@ public class RelatorioDAO {
     @SuppressWarnings("ConvertToTryWithResources")
     public List<Relatorio> listarRelatorios() throws Exception {
         List<Relatorio> relatorios = new ArrayList<>();
-        String SQLQuery = "SELECT id_relatorio, movimentacao, quantidade, id_produto_relatorio, data_hora_venda FROM relatorio";
+        String SQLQuery = "SELECT id_relatorio, nome_produto, movimentacao, quantidade, id_produto_relatorio, data_hora_venda FROM relatorio";
         preparedStatement = dbconnection.getConnection().prepareStatement(SQLQuery);
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -35,6 +35,7 @@ public class RelatorioDAO {
             Relatorio relatorio = new Relatorio();
 
             relatorio.setId(resultSet.getInt("id_relatorio"));
+            relatorio.setNome_produto(resultSet.getString("nome_produto"));
             relatorio.setMovimentacao(resultSet.getString("movimentacao"));
             relatorio.setQuantidade(resultSet.getInt("quantidade"));
             relatorio.setId_produto(resultSet.getInt("id_produto_relatorio"));

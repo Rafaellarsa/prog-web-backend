@@ -127,6 +127,25 @@ CREATE TABLE IF NOT EXISTS public.venda_produto
         ON DELETE NO ACTION
 )
 
+CREATE SEQUENCE relatorio_id_relatorio_seq AS integer;
+CREATE SEQUENCE relatorio_id_produto_relatorio_seq AS integer;
+
+CREATE TABLE IF NOT EXISTS public.relatorio
+(
+    id_relatorio integer NOT NULL DEFAULT nextval('relatorio_id_relatorio_seq'::regclass),
+	nome_produto character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    movimentacao character varying(50) COLLATE pg_catalog."default" NOT NULL,
+    quantidade integer NOT NULL,
+    id_produto_relatorio integer NOT NULL DEFAULT nextval('relatorio_id_produto_relatorio_seq'::regclass),
+	data_hora_venda time with time zone NOT NULL,
+    CONSTRAINT relatorio_pkey PRIMARY KEY (id_relatorio),
+    CONSTRAINT fk_id_produto FOREIGN KEY (id_produto_relatorio)
+        REFERENCES public.produto (id_produto) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+);
+
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.venda_produto

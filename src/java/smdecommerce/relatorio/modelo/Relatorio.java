@@ -14,6 +14,7 @@ import java.io.Serializable;
 public class Relatorio implements Serializable{
     
     private Integer id;
+    private String nome_produto;
     private String movimentacao;
     private Integer quantidade;
     private Integer id_produto;
@@ -25,6 +26,14 @@ public class Relatorio implements Serializable{
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getNome_produto() {
+        return nome_produto;
+    }
+
+    public void setNome_produto(String nome_produto) {
+        this.nome_produto = nome_produto;
     }
 
     public String getMovimentacao() {
@@ -63,10 +72,11 @@ public class Relatorio implements Serializable{
         String json = "";
         json += "{";
             json += "\"id\":" + id + ", ";
+            json += "\"nome_produto\":\"" + nome_produto + "\", ";
             json += "\"movimentacao\":\"" + movimentacao + "\", ";
-            json += "\"quantidade\":\"" + quantidade + "\", ";
+            json += "\"quantidade\":" + quantidade + ", ";
             json += "\"id_produto\":" + id_produto + ", ";
-            json += "\"data_hora_venda\":" + data_hora_venda;
+            json += "\"data_hora_venda\":\"" + data_hora_venda + "\"";
         json += "}";
         return json;
     }
